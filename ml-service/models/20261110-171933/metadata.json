@@ -1,0 +1,222 @@
+{
+  "version": "20261110-171933",
+  "created_at": "2026-11-10T17:19:33",
+  "library": {
+    "scikit-learn": "1.9.1",
+    "pandas": "2.3.3"
+  },
+  "data": {
+    "n_transactions": 808582,
+    "period_start": "2009-12-01 07:45:00",
+    "period_end": "2011-12-09 12:50:00"
+  },
+  "cleaning": {
+    "cap_upper": {
+      "Quantity": 42.0,
+      "Price": 11.25
+    },
+    "iqr_factor": 3
+  },
+  "churn": {
+    "algorithm": "RandomForest",
+    "params": {
+      "randomforestclassifier__max_depth": "6",
+      "randomforestclassifier__min_samples_leaf": "5"
+    },
+    "features": [
+      "Recency",
+      "Frequency",
+      "Monetary",
+      "CustomerAge",
+      "RecencyRatio"
+    ],
+    "threshold": 0.5747,
+    "risk_bands": [
+      [
+        0.0,
+        0.4,
+        "RENDAH"
+      ],
+      [
+        0.4,
+        0.7,
+        "SEDANG"
+      ],
+      [
+        0.7,
+        1.01,
+        "TINGGI"
+      ]
+    ],
+    "horizon_days": 90,
+    "n_customers": 5260,
+    "churn_rate": 0.5658,
+    "metrics": {
+      "cv_roc_auc": {
+        "Baseline (Dummy)": 0.5,
+        "LogisticRegression": 0.7881,
+        "RandomForest": 0.8002,
+        "HistGradientBoosting": 0.7991
+      },
+      "test_roc_auc": 0.8106,
+      "test_accuracy": 0.7407,
+      "test_precision": 0.7772,
+      "test_recall": 0.7594,
+      "test_f1": 0.7682
+    }
+  },
+  "segment": {
+    "algorithm": "KMeans",
+    "k": 5,
+    "features": [
+      "Recency",
+      "Frequency",
+      "Monetary",
+      "AvgBasketValue",
+      "UniqueProducts",
+      "CustomerAge"
+    ],
+    "preprocessing": "log1p + StandardScaler",
+    "clusters": {
+      "3": {
+        "code": "BARU",
+        "name": "Pelanggan Baru",
+        "action": "Onboarding: sambutan, rekomendasi produk awal, dorong pembelian kedua",
+        "rank": 5,
+        "median_profile": {
+          "Recency": 29.0,
+          "Frequency": 1.0,
+          "Monetary": 379.99,
+          "AvgBasketValue": 16.22,
+          "UniqueProducts": 25.0,
+          "CustomerAge": 61.0,
+          "TenureDays": 0.0,
+          "ReturnRate": 0.0
+        },
+        "size": 733
+      },
+      "4": {
+        "code": "LOYAL",
+        "name": "Pelanggan Loyal Bernilai Tinggi",
+        "action": "Program loyalitas/VIP, akses awal produk baru",
+        "rank": 1,
+        "median_profile": {
+          "Recency": 17.0,
+          "Frequency": 13.0,
+          "Monetary": 4472.46,
+          "AvgBasketValue": 17.06,
+          "UniqueProducts": 178.0,
+          "CustomerAge": 676.0,
+          "TenureDays": 631.0,
+          "ReturnRate": 0.14
+        },
+        "size": 1219
+      },
+      "0": {
+        "code": "POTENSIAL",
+        "name": "Pelanggan Aktif Potensial",
+        "action": "Cross-sell & bundling agar frekuensi naik",
+        "rank": 2,
+        "median_profile": {
+          "Recency": 101.0,
+          "Frequency": 4.0,
+          "Monetary": 1256.82,
+          "AvgBasketValue": 18.6,
+          "UniqueProducts": 50.0,
+          "CustomerAge": 578.0,
+          "TenureDays": 370.0,
+          "ReturnRate": 0.11
+        },
+        "size": 1621
+      },
+      "2": {
+        "code": "BERISIKO",
+        "name": "Pelanggan Mulai Hilang",
+        "action": "Kampanye win-back: voucher, pengingat",
+        "rank": 3,
+        "median_profile": {
+          "Recency": 306.0,
+          "Frequency": 2.0,
+          "Monetary": 472.86,
+          "AvgBasketValue": 6.21,
+          "UniqueProducts": 61.0,
+          "CustomerAge": 523.0,
+          "TenureDays": 161.0,
+          "ReturnRate": 0.0
+        },
+        "size": 891
+      },
+      "1": {
+        "code": "HILANG",
+        "name": "Pelanggan Hilang (Sekali Beli)",
+        "action": "Re-aktivasi biaya rendah (email massal)",
+        "rank": 4,
+        "median_profile": {
+          "Recency": 411.0,
+          "Frequency": 1.0,
+          "Monetary": 248.4,
+          "AvgBasketValue": 18.08,
+          "UniqueProducts": 12.0,
+          "CustomerAge": 469.5,
+          "TenureDays": 0.0,
+          "ReturnRate": 0.0
+        },
+        "size": 1388
+      }
+    },
+    "metrics": {
+      "silhouette": 0.2541,
+      "davies_bouldin": 1.1871,
+      "min_cluster_share": 0.1253,
+      "stability_ari": 0.9974
+    },
+    "n_customers": 5852
+  },
+  "rules": {
+    "algorithm": "FP-Growth",
+    "min_support": 0.005,
+    "min_confidence": 0.3,
+    "min_lift": 2.0,
+    "max_len": 3,
+    "n_invoices": 36280,
+    "n_products": 2765,
+    "n_rules": 1731,
+    "evaluation": {
+      "hit_rate_at_k": 0.1182,
+      "popular_baseline": 0.0254,
+      "k": 5,
+      "n_test_invoices": 5000,
+      "n_rules_train": 1819,
+      "support_comparison": [
+        {
+          "min_support": 0.01,
+          "Jumlah rule": 298,
+          "Produk pemicu": 127,
+          "Hit@5": 0.0838,
+          "Baseline populer": 0.0254
+        },
+        {
+          "min_support": 0.0075,
+          "Jumlah rule": 693,
+          "Produk pemicu": 227,
+          "Hit@5": 0.1,
+          "Baseline populer": 0.0254
+        },
+        {
+          "min_support": 0.005,
+          "Jumlah rule": 1819,
+          "Produk pemicu": 402,
+          "Hit@5": 0.1182,
+          "Baseline populer": 0.0254
+        },
+        {
+          "min_support": 0.003,
+          "Jumlah rule": 5438,
+          "Produk pemicu": 737,
+          "Hit@5": 0.1314,
+          "Baseline populer": 0.0254
+        }
+      ]
+    }
+  }
+}
